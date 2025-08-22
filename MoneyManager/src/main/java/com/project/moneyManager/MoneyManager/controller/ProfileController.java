@@ -1,5 +1,6 @@
 package com.project.moneyManager.MoneyManager.controller;
 
+import com.project.moneyManager.MoneyManager.dto.AuthDTO;
 import com.project.moneyManager.MoneyManager.dto.ProfileDTO;
 import com.project.moneyManager.MoneyManager.service.ProfileService;
 import lombok.Getter;
@@ -8,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping
@@ -30,5 +33,23 @@ public class ProfileController {
         }
 
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<Map<String,Object>> login(@RequestBody AuthDTO authDTO){
+      try{
+          if (!service.isAccountActive(authDTO.getEmail())){
+              return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("message","Account is not Active Please activate Account first!"));
+
+          }
+          else {
+              Map<String,Object>response=service.authenticateAndGenerateToken(authDTO);
+              return ResponseEntity.ok(response);
+          }
+      } catch (Exception e) {
+         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+      }
+    }
+
+
 
 }
