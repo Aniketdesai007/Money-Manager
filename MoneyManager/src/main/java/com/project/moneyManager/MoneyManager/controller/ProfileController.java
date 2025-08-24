@@ -46,8 +46,13 @@ public class ProfileController {
               return ResponseEntity.ok(response);
           }
       } catch (Exception e) {
-         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("Message","Invalid Email or password"));
       }
+    }
+
+    @GetMapping("/test")
+    public String test(){
+        return "test SuccessFully!!";
     }
 
 

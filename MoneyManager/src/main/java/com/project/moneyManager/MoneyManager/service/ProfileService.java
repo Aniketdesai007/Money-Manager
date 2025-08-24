@@ -130,7 +130,7 @@ try{
     );
 
 }catch (Exception e){
- throw  new RuntimeException("Invalid username or password!!");
+ throw new RuntimeException("message"+e.getMessage());
 }
 
     }
