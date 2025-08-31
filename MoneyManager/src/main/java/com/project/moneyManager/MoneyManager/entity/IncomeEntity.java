@@ -1,0 +1,46 @@
+package com.project.moneyManager.MoneyManager.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Table(name = "tb_income")
+public class IncomeEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private String icon;
+    private LocalDate date;
+    private LocalDateTime createdAt;
+    private LocalDateTime UpdatedAt;
+    private BigDecimal amount;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id",nullable = false)
+    private CategoryEntity category;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "profile_id",nullable = false)
+    private  ProfileEntity profile;
+
+    @PrePersist
+    public  void prepesist(){
+
+        if (date==null){
+            this.date= LocalDate.now();
+        }
+    }
+
+}
