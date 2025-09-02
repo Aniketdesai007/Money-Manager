@@ -29,7 +29,15 @@ public ResponseEntity<?>deleteExpense(@PathVariable Long id){
   expenseService.deleteExpenseById(id);
   return ResponseEntity.ok("Deleted successfully");
 }
+@GetMapping("/topFiveExpenses")
+public ResponseEntity<List<ExpenseDto>> getTopFiveExpenses(){
 
+  return ResponseEntity.status(HttpStatus.FOUND).body(expenseService.getFiveExpenses());
+}
 
-
+@GetMapping("/totalExpense")
+public ResponseEntity<?>totalExpenses()
+{
+  return ResponseEntity.status(HttpStatus.OK).body("Total Expenses = "+expenseService.findTotalExpensesOfCurrentProfile());
+}
 }

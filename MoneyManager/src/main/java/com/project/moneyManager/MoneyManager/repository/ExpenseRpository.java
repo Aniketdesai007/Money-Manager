@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface ExpenseRpository extends JpaRepository<ExpenseEntity,Long> {
    @Query(
            "SELECT SUM(e.amount) FROM ExpenseEntity e WHERE e.profile.id=:profileId"
    )
-  List<ExpenseEntity> findTotalExpenseByProfileId(@Param("profileId") Long profileId);
+   BigDecimal findTotalExpenseByProfileId(@Param("profileId") Long profileId);
 
   List<ExpenseEntity> findByProfileIdAndDateBetweenAndNameContainingIgnoreCase(Long profileId,
                                                                               LocalDate startDate,

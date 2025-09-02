@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface IncomeRepository extends JpaRepository<IncomeEntity,Long> {
     @Query(
             "SELECT SUM(e.amount) FROM IncomeEntity e WHERE e.profile.id=:profileId"
     )
-    List<IncomeEntity> findTotalIncomeByProfileId(@Param("profileId") Long profileId);
+    BigDecimal findTotalIncomeByProfileId(@Param("profileId") Long profileId);
 
     List<IncomeEntity> findByProfileIdAndDateBetweenAndNameContainingIgnoreCase(Long profileId,
                                                                                  LocalDate startDate,

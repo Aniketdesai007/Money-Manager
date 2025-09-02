@@ -10,8 +10,10 @@ import com.project.moneyManager.MoneyManager.repository.IncomeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -94,6 +96,34 @@ public class IncomeService {
 
         }
     }
+
+
+
+
+
+    //get latest five income for current user
+
+    public List<IncomeDto>getFiveExpenses(){
+        ProfileEntity entity= profileService.getCurrentProfile();
+        List<IncomeEntity>topfivedata=incomeRepository.findTop5ByProfileIdOrderByDateDesc(entity.getId());
+        return topfivedata.stream().map(this::toIncomeDTO).collect(Collectors.toList());
+
+    }
+
+
+    public BigDecimal findTotalExpensesOfCurrentProfile(){
+        Long profileId= profileService.getCurrentProfile().getId();
+        if (profileId==null){
+            return BigDecimal.ZERO;
+        }else {
+            return incomeRepository.findTotalIncomeByProfileId(profileId);
+
+        }
+
+
+
+    }
+
 
 
 
