@@ -19,7 +19,7 @@ public interface IncomeRepository extends JpaRepository<IncomeEntity,Long> {
     )
     List<IncomeEntity> findTotalIncomeByProfileId(@Param("profileId") Long profileId);
 
-    List<IncomeEntity> findByProfileIDAndDateBetweenAndNameContainingIgnoreCase(Long profileId,
+    List<IncomeEntity> findByProfileIdAndDateBetweenAndNameContainingIgnoreCase(Long profileId,
                                                                                  LocalDate startDate,
                                                                                  LocalDate endDate,
                                                                                  String keyword,

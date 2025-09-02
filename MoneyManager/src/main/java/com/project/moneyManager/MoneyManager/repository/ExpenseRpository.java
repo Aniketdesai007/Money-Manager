@@ -20,7 +20,7 @@ public interface ExpenseRpository extends JpaRepository<ExpenseEntity,Long> {
    )
   List<ExpenseEntity> findTotalExpenseByProfileId(@Param("profileId") Long profileId);
 
-  List<ExpenseEntity> findByProfileIDAndDateBetweenAndNameContainingIgnoreCase(Long profileId,
+  List<ExpenseEntity> findByProfileIdAndDateBetweenAndNameContainingIgnoreCase(Long profileId,
                                                                               LocalDate startDate,
                                                                               LocalDate endDate,
                                                                               String keyword,
