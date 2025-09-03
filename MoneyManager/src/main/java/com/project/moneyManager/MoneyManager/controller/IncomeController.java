@@ -28,7 +28,7 @@ public class IncomeController {
 
     @GetMapping
     public ResponseEntity<List<IncomeDto>>getallExpensesBetweendate(){
-        return ResponseEntity.status(HttpStatus.OK).body(incomeService.getAllExpensesforCurrentProfile());
+        return ResponseEntity.status(HttpStatus.OK).body(incomeService.getAllIncomeListForCurrentProfile());
     }
 
 
@@ -37,4 +37,18 @@ public class IncomeController {
         incomeService.deleteIncomeById(id);
         return ResponseEntity.ok("Deleted successfully");
     }
+
+
+    @GetMapping("/topFiveIncome")
+    public ResponseEntity<List<IncomeDto>> getTopFiveIncome(){
+
+        return ResponseEntity.status(HttpStatus.FOUND).body(incomeService.getFiveIncomes());
+    }
+
+    @GetMapping("/totalIncome")
+    public ResponseEntity<?>totalIncome()
+    {
+        return ResponseEntity.status(HttpStatus.OK).body("Total Income = "+incomeService.findTotalIncomeOfCurrentProfile());
+    }
+
 }

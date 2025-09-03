@@ -69,7 +69,7 @@ public class IncomeService {
     //retrive all expenses for current profile
 
 
-    public List<IncomeDto> getAllExpensesforCurrentProfile(){
+    public List<IncomeDto> getAllIncomeListForCurrentProfile(){
 
         ProfileEntity profileEntity= profileService.getCurrentProfile();
 
@@ -103,7 +103,7 @@ public class IncomeService {
 
     //get latest five income for current user
 
-    public List<IncomeDto>getFiveExpenses(){
+    public List<IncomeDto>getFiveIncomes(){
         ProfileEntity entity= profileService.getCurrentProfile();
         List<IncomeEntity>topfivedata=incomeRepository.findTop5ByProfileIdOrderByDateDesc(entity.getId());
         return topfivedata.stream().map(this::toIncomeDTO).collect(Collectors.toList());
@@ -111,7 +111,7 @@ public class IncomeService {
     }
 
 
-    public BigDecimal findTotalExpensesOfCurrentProfile(){
+    public BigDecimal findTotalIncomeOfCurrentProfile(){
         Long profileId= profileService.getCurrentProfile().getId();
         if (profileId==null){
             return BigDecimal.ZERO;
