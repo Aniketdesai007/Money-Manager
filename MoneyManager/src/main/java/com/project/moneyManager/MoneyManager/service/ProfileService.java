@@ -6,6 +6,7 @@ import com.project.moneyManager.MoneyManager.entity.ProfileEntity;
 import com.project.moneyManager.MoneyManager.repository.ProfileRepository;
 import com.project.moneyManager.MoneyManager.util.Jwtutils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,6 +27,8 @@ public class ProfileService {
     private  final AuthenticationManager authenticationManager;
     private  final Jwtutils jwtutils;
 
+    @Value("${app.activation.url}")
+    private String activationUrl;
 
     public ProfileDTO registerProfile(ProfileDTO profileDTO){
         //helper funtion to convert profiledto to profile entity
@@ -34,7 +37,7 @@ public class ProfileService {
       newprofile= repository.save(newprofile);
 
       //send activation token
-        String activationLink="http://localhost:8081/api/v1.0/activate?token="+newprofile.getActivationToken();
+        String activationLink=activationUrl+"/api/v1.0/activate?token="+newprofile.getActivationToken();
 
         String subject="Activate your Money Manager Account";
         String body="click on following link to activate account "+activationLink;

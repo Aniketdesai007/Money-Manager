@@ -5,9 +5,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class EmailService {
 private final JavaMailSender mailSender;
 @Value("${spring.mail.properties.mail.smtp.from}")

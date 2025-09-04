@@ -9,6 +9,7 @@ import com.project.moneyManager.MoneyManager.repository.ExpenseRpository;
 import com.project.moneyManager.MoneyManager.repository.ProfileRepository;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -21,8 +22,6 @@ import java.util.stream.Collectors;
 public class ExpenseService {
 
     private  final CategoryRepository categoryRepo;
-    private  final ProfileRepository profileRepository;
-
     private  final ProfileService profileService;
 
     private final ExpenseRpository expenseRpository;
@@ -126,6 +125,19 @@ return BigDecimal.ZERO;
     }
 
 
+
+    public List<ExpenseDto>filterExpense(LocalDate startdate, LocalDate endDate, Sort sort,String keyword){
+       ProfileEntity profileEntity= profileService.getCurrentProfile();
+        List<ExpenseEntity>FilterExpense=expenseRpository.findByProfileIdAndDateBetweenAndNameContainingIgnoreCase(profileEntity.getId(),startdate,endDate,keyword,sort);
+        return FilterExpense.stream().map(this::toexpenseDTO).toList();
+
+    }
+
+
+    public List<ExpenseDto>getExpensesOfUserOnDate(Long id,LocalDate date){
+     List<ExpenseEntity>expenses=expenseRpository.findByProfileIdAndDate(id,date);
+  return expenses.stream().map(this::toexpenseDTO).toList();
+    }
 
 
 }
